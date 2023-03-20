@@ -57,7 +57,9 @@
     $id;
 
     if(!empty($_GET)) {
+
       $id = $_GET["id"];
+
     }
     
     // Retorna dado de um post específico

@@ -20,6 +20,12 @@ class processamentoBanco {
 
         $deletar->execute();
 
+        $deletar = $this->connection->getConnection()->prepare("DELETE FROM user_colors WHERE user_id = :id");
+
+        $deletar->bindParam(":id",$idUsuario);
+
+        $deletar->execute();
+
     }
 
     public function criarUsuario($userName,$userEmail){
