@@ -1,34 +1,48 @@
 <?php
 
-require 'connection.php';
+    include_once("./templates/header.php");
 
-$connection = new Connection();
+?>
 
-$users = $connection->query("SELECT * FROM users");
+            <div class="container">
 
-echo "<table border='1'>
+            <h1 id="main-title">Usuários Cadastrados</h1>
 
-    <tr>
-        <th>ID</th>    
-        <th>Nome</th>    
-        <th>Email</th>
-        <th>Ação</th>    
-    </tr>
-";
+                <table class="table" id="users-table">
 
-foreach($users as $user) {
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
 
-    echo sprintf("<tr>
-                      <td>%s</td>
-                      <td>%s</td>
-                      <td>%s</td>
-                      <td>
-                           <a href='#'>Editar</a>
-                           <a href='#'>Excluir</a>
-                      </td>
-                   </tr>",
-        $user->id, $user->name, $user->email);
+                    <tbody>
+                        <?php foreach($users as $user): ?>
+                            <tr>
+                                <td scope="row"><?= $user->id ?> </td>
+                                <td scope="row"><?= $user->name  ?> </td>
+                                <td scope="row"><?= $user->email  ?> </td>
+                                <td class="actions">
+                                    <a href="./editar.php?id=<?= $user->id ?>"><i class="far fa-edit edit-icon"></i></a>
+                                <form class="delete-form" action="./services/processaAcoes.php" method="POST">
+                                    <input type="hidden" name="type" value="delete">
+                                    <input type="hidden" name="id" value="<?= $user->id  ?>">
+                                    <button type="submit"><i class="fas fa-times delete-icon"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
 
-}
+                </table>
 
-echo "</table>";
+            </div>
+<?php
+
+    include_once("templates/footer.php");
+
+?>
+
